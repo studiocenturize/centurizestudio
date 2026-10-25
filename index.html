@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centurize Studio — Design Estratégico & Conteúdo</title>
+  <meta name="description" content="Studio de design especializado em branding, criação de marcas e impacto visual. Transformamos a identidade da sua empresa.">
+  <!-- FAVICON ATUALIZADO PARA PNG OTIMIZADO -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- IMPORTAÇÃO DAS FONTES -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sarabun:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .font-sarabun { font-family: 'Sarabun', sans-serif; }
+
+    /* CORREÇÃO DEFINITIVA DO 3D */
+    @keyframes floatFluid3D {
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+      50% { transform: translate3d(-15px, -20px, 0) rotate(4deg); }
+    }
+
+    .brand-3d-clean {
+      animation: floatFluid3D 14s ease-in-out infinite;
+      mix-blend-mode: screen;
+      mask-image: radial-gradient(circle at 70% 30%, black 30%, rgba(0,0,0,0.6) 60%, transparent 85%);
+      -webkit-mask-image: radial-gradient(circle at 70% 30%, black 30%, rgba(0,0,0,0.6) 60%, transparent 85%);
+    }
+
+    .fade-img { transition: opacity 0.3s ease-in-out; }
+
+    /* TRANSIÇÃO DOS ACCORDIONS / EXPANSÕES */
+    .expandable-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease-in-out;
+      opacity: 0;
+    }
+    .expandable-content.open { max-height: 500px; opacity: 1; }
+
+    /* Estilo do Seletor de Idioma */
+    .lang-btn {
+      background: transparent;
+      color: #a1a1aa;
+      padding: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lang-btn:hover { color: white; }
+
+    /* Ajustes EXCLUSIVOS para celular */
+    @media (max-width: 768px) {
+      .logo-text-mobile { font-size: 1.15rem !important; }
+      .btn-header-mobile { font-size: 0.75rem !important; padding: 8px 12px !important; }
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-white selection:text-zinc-950 relative overflow-x-hidden">
+
+  <!-- ELEMENTO 3D LIMPO E SEM LINHAS -->
+  <div class="fixed -top-10 -right-24 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] pointer-events-none z-0 opacity-25">
+    <img src="assets/Centurize 3D (1).png" alt="" class="w-full h-full object-contain brand-3d-clean">
+  </div>
+
+  <!-- HEADER AJUSTADO (Logo maior e mais próximo do texto) -->
+  <header class="fixed top-0 left-0 right-0 z-40 backdrop-blur-md bg-zinc-950/80 border-b border-zinc-800/60 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      
+      <a href="#" class="flex items-center gap-2 group">
+        <img src="assets/Logo ISOLADO(branco).png" alt="Centurize Symbol" class="h-11 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300">
+        <span class="font-sarabun font-bold text-xl sm:text-2xl tracking-tight logo-text-mobile">
+          <span class="text-white">Centurize</span> <span class="font-light text-zinc-400">Studio</span>
+        </span>
+      </a>
+      
+      <div class="flex items-center gap-4 sm:gap-6 ml-auto z-50">
+        <nav class="hidden md:flex items-center gap-8 text-xs font-semibold tracking-widest uppercase text-zinc-300">
+          <a href="#sobre" class="hover:text-white transition-colors" data-pt="Sobre" data-en="About">Sobre</a>
+          <a href="#servicos" class="hover:text-white transition-colors" data-pt="Serviços" data-en="Services">Serviços</a>
+          <a href="#portfolio" class="hover:text-white transition-colors" data-pt="Trabalhos" data-en="Work">Trabalhos</a>
+          <a href="#processo" class="hover:text-white transition-colors" data-pt="Processo" data-en="Process">Processo</a>
+          <a href="#contato" class="hover:text-white transition-colors" data-pt="Contato" data-en="Contact">Contato</a>
+        </nav>
+
+        <div class="hidden md:block h-5 w-[1px] bg-zinc-600"></div>
+
+        <div class="relative inline-block text-left">
+          <button id="langMenuBtn" onclick="toggleLangMenu()" class="lang-btn">
+            <i data-lucide="globe" class="w-4 h-4"></i>
+            <i data-lucide="chevron-down" class="w-3 h-3"></i>
+          </button>
+          
+          <div id="langDropdown" class="hidden absolute right-0 mt-2 w-36 origin-top-right rounded-xl bg-zinc-900 border border-zinc-800 shadow-lg focus:outline-none overflow-hidden transition-all">
+            <div class="py-1">
+              <button onclick="setLanguage('pt')" class="text-zinc-300 hover:bg-zinc-800 hover:text-white flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors">
+                🇧🇷 PT-BR
+              </button>
+              <button onclick="setLanguage('en')" class="text-zinc-300 hover:bg-zinc-800 hover:text-white flex w-full items-center gap-3 px-4 py-2.5 text-sm transition-colors">
+                🇺🇸 EN-US
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <a href="#contato" class="btn-header-mobile px-5 py-2.5 rounded-full bg-white text-zinc-950 font-semibold text-sm hover:bg-zinc-200 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-white/5 whitespace-nowrap" data-pt="Solicitar Orçamento" data-en="Get a Quote">
+          Solicitar Orçamento
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="pt-36 pb-20 px-6 max-w-7xl mx-auto flex flex-col items-start justify-center min-h-screen relative z-10">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-xs font-medium text-zinc-300 mb-8 backdrop-blur-sm">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span data-pt="Agenda aberta para 2026" data-en="Open schedule for 2026">Agenda aberta para 2026</span>
+    </div>
+    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white max-w-4xl leading-[1.1]">
+      <span data-pt="Design estratégico para marcas que " data-en="Strategic design for brands that ">Design estratégico para marcas que </span><span class="text-zinc-400" data-pt="lideram." data-en="lead.">lideram.</span>
+    </h1>
+    <p class="mt-6 text-lg sm:text-xl text-zinc-400 max-w-2xl font-normal leading-relaxed" data-pt="Transformamos a comunicação de marcas em algo humano, atrativo e rentável através de design contemporâneo, posicionamento editorial e produção de conteúdo audiovisual." data-en="We transform brand communication into something human, attractive, and profitable through contemporary design, editorial positioning, and audiovisual content production.">
+      Transformamos a comunicação de marcas em algo humano, atrativo e rentável através de design contemporâneo, posicionamento editorial e produção de conteúdo audiovisual.
+    </p>
+    <div class="mt-10 flex flex-wrap gap-4">
+      <a href="#portfolio" class="px-8 py-4 rounded-full bg-white text-zinc-950 font-semibold text-base hover:bg-zinc-200 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+        <span data-pt="Explorar Projetos" data-en="Explore Projects">Explorar Projetos</span> <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+      </a>
+      <a href="https://wa.me/5581995977910" target="_blank" class="px-8 py-4 rounded-full bg-zinc-900 text-white font-medium text-base border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800 transition-all">
+        <span data-pt="Falar no WhatsApp" data-en="Chat on WhatsApp">Falar no WhatsApp</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SOBRE A AGÊNCIA & PILARES -->
+  <section id="sobre" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-900 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div class="lg:col-span-5">
+        <h2 class="text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-3" data-pt="O que é a Centurize Studio?" data-en="What is Centurize Studio?">O que é a Centurize Studio?</h2>
+        <p class="text-3xl sm:text-4xl font-bold text-white leading-tight"><span data-pt="Comunicação humanizada, atrativa e " data-en="Humanized, attractive, and ">Comunicação humanizada, atrativa e </span><span class="text-zinc-400" data-pt="rentável." data-en="profitable.">rentável.</span></p>
+        <p class="mt-6 text-zinc-400 leading-relaxed" data-pt="Investir em uma marca profissional não é despesa, é um investimento estratégico que impulsiona o sucesso a longo prazo. Unimos estética refinada, retenção de atenção em vídeo e posicionamento sólido para gerar resultados reais de negócios." data-en="Investing in a professional brand is not an expense; it is a strategic investment that drives long-term success. We combine refined aesthetics, video attention retention, and solid positioning to generate real business results.">
+          Investir em uma marca profissional não é despesa, é um investimento estratégico que impulsiona o sucesso a longo prazo. Unimos estética refinada, retenção de atenção em vídeo e posicionamento sólido para gerar resultados reais de negócios.
+        </p>
+      </div>
+
+      <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-all">
+          <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-white mb-4"><i data-lucide="award" class="w-5 h-5"></i></div>
+          <h3 class="text-lg font-bold text-white mb-2" data-pt="Autoridade" data-en="Authority">Autoridade</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed" data-pt="Torne-se referência no seu nicho transmitindo confiança e excelência." data-en="Become a reference in your niche by transmitting trust and excellence.">Torne-se referência no seu nicho transmitindo confiança e excelência.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-all">
+          <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-white mb-4"><i data-lucide="users" class="w-5 h-5"></i></div>
+          <h3 class="text-lg font-bold text-white mb-2" data-pt="Conexão" data-en="Connection">Conexão</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed" data-pt="Transforme seguidores em clientes através de uma comunicação assertiva e humana." data-en="Turn followers into clients through assertive and humanized communication.">Transforme seguidores em clientes através de uma comunicação assertiva e humana.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-all">
+          <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-white mb-4"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+          <h3 class="text-lg font-bold text-white mb-2" data-pt="Posicionamento" data-en="Positioning">Posicionamento</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed" data-pt="Ocupar o espaço digital com exclusividade é a melhor defesa contra a concorrência." data-en="Occupying the digital space with exclusivity is the best defense against competition.">Ocupar o espaço digital com exclusividade é a melhor defesa contra a concorrência.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-all">
+          <div class="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-white mb-4"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+          <h3 class="text-lg font-bold text-white mb-2" data-pt="Resultado" data-en="Results">Resultado</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed" data-pt="Reduza a barreira de venda e acelere o ciclo de compra do seu público." data-en="Reduce the sales barrier and accelerate your audience's buying cycle.">Reduza a barreira de venda e acelere o ciclo de compra do seu público.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS INTERATIVOS -->
+  <section id="servicos" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-900 relative z-10">
+    <div class="mb-16">
+      <h2 class="text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-3" data-pt="Frentes de Atuação" data-en="Our Services">Frentes de Atuação</h2>
+      <p class="text-3xl sm:text-4xl font-bold text-white"><span data-pt="Soluções de " data-en="High Impact ">Soluções de </span><span class="text-zinc-400" data-pt="Alto Impacto" data-en="Solutions">Alto Impacto</span> <span class="text-xs font-normal text-zinc-500 block sm:inline sm:ml-3" data-pt="(Clique em um serviço para ver a explicação)" data-en="(Click a service to see details)">(Clique em um serviço para ver a explicação detalhada)</span></p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div onclick="toggleExpand('servico-1')" class="md:col-span-7 p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-zinc-500 font-mono">01 / BRANDING</span>
+            <i data-lucide="chevron-down" id="icon-servico-1" class="w-5 h-5 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-white mt-4" data-pt="Identidade Visual & Branding" data-en="Visual Identity & Branding">Identidade Visual & Branding</h3>
+          <p class="mt-2 text-zinc-400 text-sm leading-relaxed" data-pt="Desenvolvimento completo da identidade visual para representar a essência e o posicionamento da marca no mercado." data-en="Complete visual identity development to represent the brand's essence and positioning in the market.">Desenvolvimento completo da identidade visual para representar a essência e o posicionamento da marca no mercado.</p>
+        </div>
+        <div id="servico-1" class="expandable-content pt-4 border-t border-zinc-800/80 mt-4 text-xs text-zinc-300 space-y-2 leading-relaxed" data-pt="<p><strong>O que é e como funciona:</strong></p><p>A identidade visual vai muito além de um logotipo bonito; ela é a tradução gráfica da alma da sua empresa. Neste processo, estruturamos toda a arquitetura de marca, desenvolvendo logotipos versáteis, submarks, escolha rigorosa de tipografias proprietárias e uma paleta cromática planejada para despertar os gatilhos visuais corretos no seu público.</p><p>• <strong>Entregáveis:</strong> Manual de identidade visual completo, guias de aplicação digital e impressa, kits de mockups realistas em 3D e arquivos abertos em vetor vetorizados em padrão industrial.</p>" data-en="<p><strong>What it is and how it works:</strong></p><p>Visual identity goes far beyond a beautiful logo; it is the graphic translation of your company's soul. In this process, we structure the entire brand architecture, developing versatile logos, submarks, rigorous selection of proprietary typography, and a color palette designed to trigger the right visual cues in your audience.</p><p>• <strong>Deliverables:</strong> Complete visual identity manual, digital and print application guides, realistic 3D mockup kits, and open vector files vectorized to industry standards.</p>">
+          <p><strong>O que é e como funciona:</strong></p>
+          <p>A identidade visual vai muito além de um logotipo bonito; ela é a tradução gráfica da alma da sua empresa. Neste processo, estruturamos toda a arquitetura de marca, desenvolvendo logotipos versáteis, submarks, escolha rigorosa de tipografias proprietárias e uma paleta cromática planejada para despertar os gatilhos visuais corretos no seu público.</p>
+          <p>• <strong>Entregáveis:</strong> Manual de identidade visual completo, guias de aplicação digital e impressa, kits de mockups realistas em 3D e arquivos abertos em vetor vetorizados em padrão industrial.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('servico-2')" class="md:col-span-5 p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-zinc-500 font-mono">02 / STRATEGY</span>
+            <i data-lucide="chevron-down" id="icon-servico-2" class="w-5 h-5 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-white mt-4" data-pt="Estratégia de Marca" data-en="Brand Strategy">Estratégia de Marca</h3>
+          <p class="mt-2 text-zinc-400 text-sm leading-relaxed" data-pt="Posicionamento inteligente para destacar a empresa da concorrência e atrair o público ideal." data-en="Smart positioning to highlight the company from the competition and attract the ideal audience.">Posicionamento inteligente para destacar a empresa da concorrência e atrair o público ideal.</p>
+        </div>
+        <div id="servico-2" class="expandable-content pt-4 border-t border-zinc-800/80 mt-4 text-xs text-zinc-300 space-y-2 leading-relaxed" data-pt="<p><strong>O que é e como funciona:</strong></p><p>Nenhuma estética sobrevive sem direcionamento estratégico. Aqui, mapeamos o comportamento do seu público-alvo, estudamos os pontos cegos dos concorrentes e definimos o tom de voz e o manifesto da sua marca, garantindo que cada post, vídeo ou campanha tenha um propósito comercial claro.</p><p>• <strong>Entregáveis:</strong> Diretrizes de posicionamento de mercado, definição de pilares editoriais e planejamento de direcionamento criativo.</p>" data-en="<p><strong>What it is and how it works:</strong></p><p>No aesthetic survives without strategic direction. Here, we map the behavior of your target audience, study competitors' blind spots, and define your brand's tone of voice and manifesto, ensuring that every post, video, or campaign has a clear commercial purpose.</p><p>• <strong>Deliverables:</strong> Market positioning guidelines, definition of editorial pillars, and creative direction planning.</p>">
+          <p><strong>O que é e como funciona:</strong></p>
+          <p>Nenhuma estética sobrevive sem direcionamento estratégico. Aqui, mapeamos o comportamento do seu público-alvo, estudamos os pontos cegos dos concorrentes e definimos o tom de voz e o manifesto da sua marca, garantindo que cada post, vídeo ou campanha tenha um propósito comercial claro.</p>
+          <p>• <strong>Entregáveis:</strong> Diretrizes de posicionamento de mercado, definição de pilares editoriais e planejamento de direcionamento criativo.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('servico-3')" class="md:col-span-4 p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-zinc-500 font-mono">03 / AUDIOVISUAL</span>
+            <i data-lucide="chevron-down" id="icon-servico-3" class="w-5 h-5 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mt-4" data-pt="Edição de Vídeos" data-en="Video Editing">Edição de Vídeos</h3>
+          <p class="mt-2 text-zinc-400 text-sm leading-relaxed" data-pt="Cortes dinâmicos para Reels e TikTok focados em retenção de atenção." data-en="Dynamic cuts for Reels and TikTok focused on attention retention.">Cortes dinâmicos para Reels e TikTok focados em retenção de atenção.</p>
+        </div>
+        <div id="servico-3" class="expandable-content pt-4 border-t border-zinc-800/80 mt-4 text-xs text-zinc-300 space-y-2 leading-relaxed" data-pt="<p><strong>O que é e como funciona:</strong></p><p>O formato de vídeo curto é a ferramenta mais poderosa de atração orgânica atual. Aplicamos técnicas de pós-produção rítmica com cortes precisos, legendas magnéticas, trilhas estratégicas e efeitos visuais que prendem o espectador do primeiro ao último segundo.</p><p>• <strong>Entregáveis:</strong> Edição profissional em formato vertical otimizada para algoritmos de redes sociais.</p>" data-en="<p><strong>What it is and how it works:</strong></p><p>The short video format is the most powerful organic attraction tool today. We apply rhythmic post-production techniques with precise cuts, magnetic subtitles, strategic soundtracks, and visual effects that hook the viewer from the first to the last second.</p><p>• <strong>Deliverables:</strong> Professional vertical format editing optimized for social media algorithms.</p>">
+          <p><strong>O que é e como funciona:</strong></p>
+          <p>O formato de vídeo curto é a ferramenta mais poderosa de atração orgânica atual. Aplicamos técnicas de pós-produção rítmica com cortes precisos, legendas magnéticas, trilhas estratégicas e efeitos visuais que prendem o espectador do primeiro ao último segundo.</p>
+          <p>• <strong>Entregáveis:</strong> Edição profissional em formato vertical otimizada para algoritmos de redes sociais.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('servico-4')" class="md:col-span-4 p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-zinc-500 font-mono">04 / SOCIAL</span>
+            <i data-lucide="chevron-down" id="icon-servico-4" class="w-5 h-5 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mt-4" data-pt="Gestão de Social Media" data-en="Social Media Management">Gestão de Social Media</h3>
+          <p class="mt-2 text-zinc-400 text-sm leading-relaxed" data-pt="Planejamento e rotina de presença ativa e organizada nas redes sociais." data-en="Active and organized presence routine on social media.">Planejamento e rotina de presença ativa e organizada nas redes sociais.</p>
+        </div>
+        <div id="servico-4" class="expandable-content pt-4 border-t border-zinc-800/80 mt-4 text-xs text-zinc-300 space-y-2 leading-relaxed" data-pt="<p><strong>O que é e como funciona:</strong></p><p>Cuidamos da constância e da curadoria do seu perfil digital. Organizamos a frequência de postagens, estruturação de carrosséis informativos e manutenção de uma estética limpa que transmite profissionalismo instantâneo.</p><p>• <strong>Entregáveis:</strong> Calendários editoriais periódicos e acompanhamento de publicações.</p>" data-en="<p><strong>What it is and how it works:</strong></p><p>We take care of the consistency and curation of your digital profile. We organize posting frequency, structuring informative carousels, and maintaining a clean aesthetic that instantly conveys professionalism.</p><p>• <strong>Deliverables:</strong> Periodic editorial calendars and post monitoring.</p>">
+          <p><strong>O que é e como funciona:</strong></p>
+          <p>Cuidamos da constância e da curadoria do seu perfil digital. Organizamos a frequência de postagens, estruturação de carrosséis informativos e manutenção de uma estética limpa que transmite profissionalismo instantâneo.</p>
+          <p>• <strong>Entregáveis:</strong> Calendários editoriais periódicos e acompanhamento de publicações.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('servico-5')" class="md:col-span-4 p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-zinc-500 font-mono">05 / DIRECTION</span>
+            <i data-lucide="chevron-down" id="icon-servico-5" class="w-5 h-5 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mt-4" data-pt="Direção de Filmagens" data-en="Filming Direction">Direção de Filmagens</h3>
+          <p class="mt-2 text-zinc-400 text-sm leading-relaxed" data-pt="Orientação em gravações para garantir naturalidade e conexão em vídeo." data-en="Guidance in recordings to ensure naturalness and connection in video.">Orientação em gravações para garantir naturalidade e conexão em vídeo.</p>
+        </div>
+        <div id="servico-5" class="expandable-content pt-4 border-t border-zinc-800/80 mt-4 text-xs text-zinc-300 space-y-2 leading-relaxed" data-pt="<p><strong>O que é e como funciona:</strong></p><p>Aparecer bem na câmera exige técnica e direcionamento. Acompanhamos e orientamos durante as gravações para garantir clareza na transmissão da mensagem, postura comercial humanizada e naturalidade diante da lente.</p><p>• <strong>Entregáveis:</strong> Direção de cena presencial/híbrida e captação de conteúdo dinâmico.</p>" data-en="<p><strong>What it is and how it works:</strong></p><p>Looking good on camera requires technique and direction. We accompany and guide you during recordings to ensure clarity in message transmission, a humanized commercial posture, and naturalness in front of the lens.</p><p>• <strong>Deliverables:</strong> On-site/hybrid scene direction and dynamic content capture.</p>">
+          <p><strong>O que é e como funciona:</strong></p>
+          <p>Aparecer bem na câmera exige técnica e direcionamento. Acompanhamos e orientamos durante as gravações para garantir clareza na transmissão da mensagem, postura comercial humanizada e naturalidade diante da lente.</p>
+          <p>• <strong>Entregáveis:</strong> Direção de cena presencial/híbrida e captação de conteúdo dinâmico.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE PORTFÓLIO / TRABALHOS FEITOS -->
+  <section id="portfolio" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-900 relative z-10">
+    <div class="mb-16">
+      <h2 class="text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-3" data-pt="Nossos Projetos" data-en="Our Projects">Nossos Projetos</h2>
+      <p class="text-3xl sm:text-4xl font-bold text-white"><span data-pt="Trabalhos " data-en="Selected ">Trabalhos </span><span class="text-zinc-400" data-pt="Feitos" data-en="Work">Feitos</span></p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- 1. UNIÃO BEBIDAS -->
+      <div onclick="openProjectModal('uniaoBebidas')" class="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5">
+        <div class="aspect-[4/3] w-full overflow-hidden">
+          <img src="assets/União Bebidas.1(capa).jpg" alt="União Bebidas" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-zinc-500 font-medium" data-pt="Mídias Sociais & Produção 360º" data-en="Social Media & 360º Production">Mídias Sociais & Produção 360º</span>
+          <h3 class="text-xl font-bold text-white mt-1 group-hover:text-zinc-200 transition-colors">União Bebidas</h3>
+        </div>
+      </div>
+
+      <!-- 2. LOJÃO DAS CADEIRAS -->
+      <div onclick="openProjectModal('lojaoDasCadeiras')" class="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5">
+        <div class="aspect-[4/3] w-full overflow-hidden">
+          <img src="assets/Lojao das cadeiras.1(capa).jpg" alt="Lojão das Cadeiras" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-zinc-500 font-medium" data-pt="Roteiro, Gravação & Edição" data-en="Scripting, Filming & Editing">Roteiro, Gravação & Edição</span>
+          <h3 class="text-xl font-bold text-white mt-1 group-hover:text-zinc-200 transition-colors">Lojão das Cadeiras</h3>
+        </div>
+      </div>
+
+      <!-- 3. GLIMMOR -->
+      <div onclick="openProjectModal('glimmor')" class="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5">
+        <div class="aspect-[4/3] w-full overflow-hidden">
+          <img src="assets/Glimmor.1.jpg" alt="Glimmor" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-zinc-500 font-medium" data-pt="Identidade Visual & Packaging" data-en="Visual Identity & Packaging">Identidade Visual & Packaging</span>
+          <h3 class="text-xl font-bold text-white mt-1 group-hover:text-zinc-200 transition-colors">Glimmor</h3>
+        </div>
+      </div>
+
+      <!-- 4. CONSTRULUX -->
+      <div onclick="openProjectModal('construlux')" class="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5">
+        <div class="aspect-[4/3] w-full overflow-hidden">
+          <img src="assets/Construlux.1.jpg" alt="Construlux" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-zinc-500 font-medium" data-pt="Branding & Construção Civil" data-en="Branding & Construction">Branding & Construção Civil</span>
+          <h3 class="text-xl font-bold text-white mt-1 group-hover:text-zinc-200 transition-colors">Construlux</h3>
+        </div>
+      </div>
+
+      <!-- 5. PET DREAM HOSPITAL VETERINÁRIO -->
+      <div onclick="openProjectModal('petDream')" class="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5">
+        <div class="aspect-[4/3] w-full overflow-hidden">
+          <img src="assets/PetDream.1(capa).jpg" alt="Pet Dream" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-zinc-500 font-medium" data-pt="Direção Audiovisual & Roteiro" data-en="Audiovisual Direction & Scripting">Direção Audiovisual & Roteiro</span>
+          <h3 class="text-xl font-bold text-white mt-1 group-hover:text-zinc-200 transition-colors">Pet Dream Hospital Veterinário</h3>
+        </div>
+      </div>
+
+      <!-- 6. CANAL DA CONSTRUÇÃO -->
+      <div onclick="openProjectModal('canalDaConstrucao')" class="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5">
+        <div class="aspect-[4/3] w-full overflow-hidden">
+          <img src="assets/Canal da Construção.1(capa).jpg" alt="Canal da Construção" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-zinc-500 font-medium" data-pt="Direção Audiovisual & Roteiro" data-en="Audiovisual Direction & Scripting">Direção Audiovisual & Roteiro</span>
+          <h3 class="text-xl font-bold text-white mt-1 group-hover:text-zinc-200 transition-colors">Canal da Construção</h3>
+        </div>
+      </div>
+
+      <!-- 7. MAXXI SUPRI -->
+      <div onclick="openProjectModal('maxxiSupri')" class="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-zinc-800 hover:border-zinc-600 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/5">
+        <div class="aspect-[4/3] w-full overflow-hidden">
+          <img src="assets/MaxxiSupri.1(capa).jpg" alt="Maxxi Supri" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+        </div>
+        <div class="p-6">
+          <span class="text-xs text-zinc-500 font-medium" data-pt="Direção Audiovisual & Roteiro" data-en="Audiovisual Direction & Scripting">Direção Audiovisual & Roteiro</span>
+          <h3 class="text-xl font-bold text-white mt-1 group-hover:text-zinc-200 transition-colors">Maxxi Supri</h3>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROCESSO DE TRABALHO INTERATIVO -->
+  <section id="processo" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-900 relative z-10">
+    <div class="mb-16">
+      <h2 class="text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-3" data-pt="Metodologia" data-en="Methodology">Metodologia</h2>
+      <p class="text-3xl sm:text-4xl font-bold text-white"><span data-pt="Cronograma & " data-en="Schedule & ">Cronograma & </span><span class="text-zinc-400" data-pt="Ferramentas" data-en="Tools">Ferramentas</span> <span class="text-xs font-normal text-zinc-500 block sm:inline sm:ml-3" data-pt="(Clique em cada fase para ver o passo a passo completo)" data-en="(Click each phase to see the step-by-step)">(Clique em cada fase para ver o passo a passo completo)</span></p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-16">
+      <div onclick="toggleExpand('fase-1')" class="p-5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-mono text-zinc-500" data-pt="01. FASE" data-en="STEP 01">01. FASE</span>
+            <i data-lucide="chevron-down" id="icon-fase-1" class="w-4 h-4 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h4 class="text-base font-bold text-white mt-2" data-pt="Imersão" data-en="Immersion">Imersão</h4>
+          <p class="text-xs text-zinc-400 mt-1" data-pt="Diagnóstico e objetivo da marca." data-en="Diagnosis and brand goal.">Diagnóstico e objetivo da marca.</p>
+        </div>
+        <div id="fase-1" class="expandable-content pt-3 border-t border-zinc-800 mt-3 text-xs text-zinc-300 space-y-1.5 leading-relaxed" data-pt="<p><strong>Detalhes da Etapa:</strong></p><p>• Estudo profundo do briefing e metas comerciais.</p><p>• Análise comportamental do público e concorrentes diretos.</p><p>• Diagnóstico técnico do perfil atual nas redes.</p>" data-en="<p><strong>Step Details:</strong></p><p>• Deep study of the briefing and commercial goals.</p><p>• Behavioral analysis of the audience and direct competitors.</p><p>• Technical diagnosis of the current social media profile.</p>">
+          <p><strong>Detalhes da Etapa:</strong></p>
+          <p>• Estudo profundo do briefing e metas comerciais.</p>
+          <p>• Análise comportamental do público e concorrentes diretos.</p>
+          <p>• Diagnóstico técnico do perfil atual nas redes.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('fase-2')" class="p-5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-mono text-zinc-500" data-pt="02. FASE" data-en="STEP 02">02. FASE</span>
+            <i data-lucide="chevron-down" id="icon-fase-2" class="w-4 h-4 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h4 class="text-base font-bold text-white mt-2" data-pt="Estratégia" data-en="Strategy">Estratégia</h4>
+          <p class="text-xs text-zinc-400 mt-1" data-pt="Definição da linha editorial." data-en="Definition of editorial line.">Definição da linha editorial.</p>
+        </div>
+        <div id="fase-2" class="expandable-content pt-3 border-t border-zinc-800 mt-3 text-xs text-zinc-300 space-y-1.5 leading-relaxed" data-pt="<p><strong>Detalhes da Etapa:</strong></p><p>• Criação estruturada do calendário editorial.</p><p>• Roteirização detalhada de vídeos para Reels e TikTok.</p><p>• Definição de tom de voz, frequência e formatos.</p>" data-en="<p><strong>Step Details:</strong></p><p>• Structured creation of the editorial calendar.</p><p>• Detailed video scripting for Reels and TikTok.</p><p>• Definition of tone of voice, frequency, and formats.</p>">
+          <p><strong>Detalhes da Etapa:</strong></p>
+          <p>• Criação estruturada do calendário editorial.</p>
+          <p>• Roteirização detalhada de vídeos para Reels e TikTok.</p>
+          <p>• Definição de tom de voz, frequência e formatos.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('fase-3')" class="p-5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-mono text-zinc-500" data-pt="03. FASE" data-en="STEP 03">03. FASE</span>
+            <i data-lucide="chevron-down" id="icon-fase-3" class="w-4 h-4 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h4 class="text-base font-bold text-white mt-2" data-pt="Criação" data-en="Creation">Criação</h4>
+          <p class="text-xs text-zinc-400 mt-1" data-pt="Design de posts e validação." data-en="Post design and validation.">Design de posts e validação.</p>
+        </div>
+        <div id="fase-3" class="expandable-content pt-3 border-t border-zinc-800 mt-3 text-xs text-zinc-300 space-y-1.5 leading-relaxed" data-pt="<p><strong>Detalhes da Etapa:</strong></p><p>• Coleta e curadoria de referências visuais de alto padrão.</p><p>• Definição rigorosa do estilo visual e identidade.</p><p>• Copywriting focado em engajamento e escrita de legendas.</p>" data-en="<p><strong>Step Details:</strong></p><p>• Collection and curation of high-standard visual references.</p><p>• Rigorous definition of visual style and identity.</p><p>• Copywriting focused on engagement and caption writing.</p>">
+          <p><strong>Detalhes da Etapa:</strong></p>
+          <p>• Coleta e curadoria de referências visuais de alto padrão.</p>
+          <p>• Definição rigorosa do estilo visual e identidade.</p>
+          <p>• Copywriting focado em engajamento e escrita de legendas.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('fase-4')" class="p-5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-mono text-zinc-500" data-pt="04. FASE" data-en="STEP 04">04. FASE</span>
+            <i data-lucide="chevron-down" id="icon-fase-4" class="w-4 h-4 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h4 class="text-base font-bold text-white mt-2" data-pt="Produção" data-en="Production">Produção</h4>
+          <p class="text-xs text-zinc-400 mt-1" data-pt="Edição dinâmica e captação." data-en="Dynamic editing and capturing.">Edição dinâmica e captação.</p>
+        </div>
+        <div id="fase-4" class="expandable-content pt-3 border-t border-zinc-800 mt-3 text-xs text-zinc-300 space-y-1.5 leading-relaxed" data-pt="<p><strong>Detalhes da Etapa:</strong></p><p>• Pós-produção e edição dinâmica de vídeos verticais.</p><p>• Criação de carrosséis estáticos e materiais gráficos.</p><p>• Aplicação impecável da identidade visual em todas as peças.</p>" data-en="<p><strong>Step Details:</strong></p><p>• Post-production and dynamic editing of vertical videos.</p><p>• Creation of static carousels and graphic materials.</p><p>• Impeccable application of visual identity in all pieces.</p>">
+          <p><strong>Detalhes da Etapa:</strong></p>
+          <p>• Pós-produção e edição dinâmica de vídeos verticais.</p>
+          <p>• Criação de carrosséis estáticos e materiais gráficos.</p>
+          <p>• Aplicação impecável da identidade visual em todas as peças.</p>
+        </div>
+      </div>
+
+      <div onclick="toggleExpand('fase-5')" class="p-5 rounded-xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-600 transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-mono text-zinc-500" data-pt="05. FASE" data-en="STEP 05">05. FASE</span>
+            <i data-lucide="chevron-down" id="icon-fase-5" class="w-4 h-4 text-zinc-400 transition-transform duration-300"></i>
+          </div>
+          <h4 class="text-base font-bold text-white mt-2" data-pt="Entrega" data-en="Delivery">Entrega</h4>
+          <p class="text-xs text-zinc-400 mt-1" data-pt="Aprovação e acompanhamento." data-en="Approval and tracking.">Aprovação e acompanhamento.</p>
+        </div>
+        <div id="fase-5" class="expandable-content pt-3 border-t border-zinc-800 mt-3 text-xs text-zinc-300 space-y-1.5 leading-relaxed" data-pt="<p><strong>Detalhes da Etapa:</strong></p><p>• Envio organizado do material finalizado para publicação.</p><p>• Organização e estruturação do cronograma pronto.</p><p>• Acompanhamento contínuo de desempenho e métricas.</p>" data-en="<p><strong>Step Details:</strong></p><p>• Organized delivery of finalized material for publication.</p><p>• Organization and structuring of the ready schedule.</p><p>• Continuous monitoring of performance and metrics.</p>">
+          <p><strong>Detalhes da Etapa:</strong></p>
+          <p>• Envio organizado do material finalizado para publicação.</p>
+          <p>• Organização e estruturação do cronograma pronto.</p>
+          <p>• Acompanhamento contínuo de desempenho e métricas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCO DE FERRAMENTAS -->
+    <div class="p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 mt-12">
+      <h3 class="text-lg font-bold text-white mb-2" data-pt="Stack Criativa & Ferramentas de Domínio Profissional" data-en="Creative Stack & Professional Mastery Tools">Stack Criativa & Ferramentas de Domínio Profissional</h3>
+      <p class="text-xs text-zinc-400 mb-6" data-pt="Trabalhamos com o ecossistema líder de mercado da <strong>Adobe</strong> e ferramentas de nível superior para garantir excelência técnica absoluta em cada entrega." data-en="We work with the market-leading <strong>Adobe</strong> ecosystem and top-tier tools to ensure absolute technical excellence in every delivery.">Trabalhamos com o ecossistema líder de mercado da <strong>Adobe</strong> e ferramentas de nível superior para garantir excelência técnica absoluta em cada entrega.</p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="border-l-2 border-zinc-700 pl-4">
+          <span class="text-xs text-zinc-500 uppercase font-semibold" data-pt="Criação & Edição de Imagem" data-en="Image Creation & Editing">Criação & Edição de Imagem</span>
+          <p class="text-sm font-semibold text-white mt-1">Adobe Photoshop | Canva</p>
+        </div>
+        <div class="border-l-2 border-zinc-700 pl-4">
+          <span class="text-xs text-zinc-500 uppercase font-semibold" data-pt="Identidade V. & Vetor" data-en="Visual Identity & Vector">Identidade V. & Vetor</span>
+          <p class="text-sm font-semibold text-white mt-1">Adobe Illustrator</p>
+        </div>
+        <div class="border-l-2 border-zinc-700 pl-4">
+          <span class="text-xs text-zinc-500 uppercase font-semibold" data-pt="Pós-Produção & Vídeo" data-en="Post-Production & Video">Pós-Produção & Vídeo</span>
+          <p class="text-sm font-semibold text-white mt-1">Adobe Premiere | CapCut</p>
+        </div>
+        <div class="border-l-2 border-zinc-700 pl-4">
+          <span class="text-xs text-zinc-500 uppercase font-semibold" data-pt="Gestão & Organização" data-en="Management & Organization">Gestão & Organização</span>
+          <p class="text-sm font-semibold text-white mt-1">Trello | Notion</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO DE CONTATO -->
+  <section id="contato" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-900 relative z-10">
+    <div class="max-w-3xl mx-auto bg-zinc-900/80 border border-zinc-800 p-8 sm:p-12 rounded-3xl backdrop-blur-md">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-white" data-pt="Solicitar Orçamento" data-en="Request a Quote">Solicitar Orçamento</h2>
+        <p class="text-zinc-400 text-sm mt-2" data-pt="Preencha o formulário e enviaremos sua mensagem no WhatsApp." data-en="Fill out the form and we will send your message on WhatsApp.">Preencha o formulário e enviaremos sua mensagem no WhatsApp.</p>
+      </div>
+
+      <form onsubmit="sendWhatsApp(event)" class="space-y-6">
+        <div>
+          <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2" data-pt="Seu Nome ou Empresa" data-en="Your Name or Company">Seu Nome ou Empresa</label>
+          <input type="text" id="formName" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-zinc-500 transition-colors">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2" data-pt="Serviço de Interesse" data-en="Service of Interest">Serviço de Interesse</label>
+          <select id="formService" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-zinc-500 transition-colors">
+            <option value="Identidade Visual & Branding">Identidade Visual & Branding</option>
+            <option value="Estratégia de Marca">Estratégia de Marca</option>
+            <option value="Edição de Vídeos">Edição de Vídeos / Video Editing</option>
+            <option value="Gestão de Mídias Sociais">Gestão de Mídias Sociais / Social Media</option>
+            <option value="Direção de Filmagens">Direção de Filmagens / Filming Direction</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2" data-pt="Momento Atual da Marca" data-en="Current Brand Moment">Momento Atual da Marca</label>
+          <textarea id="formDesc" rows="4" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-zinc-500 transition-colors"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]">
+          <i data-lucide="message-square" class="w-5 h-5"></i>
+          <span data-pt="Enviar Orçamento pelo WhatsApp" data-en="Send Request via WhatsApp">Enviar Orçamento pelo WhatsApp</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MODAL DE IMAGENS -->
+  <div id="projectModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/90 backdrop-blur-md hidden transition-all duration-300">
+    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl max-w-4xl w-full p-6 sm:p-8 relative max-h-[92vh] overflow-y-auto">
+      <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white z-20 p-2 bg-zinc-950/70 rounded-full border border-zinc-800">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+      <div class="relative w-full h-[320px] sm:h-[480px] rounded-xl overflow-hidden bg-zinc-950 mb-6 border border-zinc-800">
+        <img id="modalMainImg" src="" alt="Projeto" class="w-full h-full object-cover fade-img">
+        <button onclick="prevImage()" class="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-zinc-950/80 border border-zinc-700 text-white hover:bg-zinc-800 transition-all z-10 hover:scale-110">
+          <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+        <button onclick="nextImage()" class="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-zinc-950/80 border border-zinc-700 text-white hover:bg-zinc-800 transition-all z-10 hover:scale-110">
+          <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <span id="modalCat" class="text-xs text-zinc-500 font-semibold uppercase tracking-wider"></span>
+      <h3 id="modalTitle" class="text-2xl font-bold text-white mt-1"></h3>
+      <p id="modalDesc" class="text-zinc-400 mt-3 text-sm leading-relaxed"></p>
+      <div id="modalLinksSection" class="mt-8 border-t border-zinc-800 pt-6">
+        <div id="modalLinksContainer" class="flex flex-wrap gap-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ (Logo ajustado, maior e próximo) -->
+  <footer class="bg-white text-zinc-900 py-12 px-6 relative z-10 border-t border-zinc-200">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-6 text-sm">
+      <div class="flex items-center gap-2">
+        <img src="assets/Logo ISOLADO(branco).png" alt="Centurize Symbol" class="h-11 sm:h-12 w-auto object-contain filter invert">
+        <span class="font-sarabun font-bold text-xl sm:text-2xl tracking-tight">
+          <span class="text-zinc-950">Centurize</span> <span class="font-light text-zinc-500">Studio</span>
+        </span>
+      </div>
+      <div class="flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-12 text-center md:text-right font-medium text-zinc-700">
+        <div>
+          <p>Recife | Híbrido</p>
+          <p class="mt-1">studiocenturize@gmail.com | +55 81 99597-7910</p>
+        </div>
+        <p class="text-zinc-500">© 2026 Centurize Studio. <span data-pt="Todos os direitos reservados." data-en="All rights reserved.">Todos os direitos reservados.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    let currentLang = 'pt';
+    
+    function toggleLangMenu() {
+      const dropdown = document.getElementById('langDropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.lang-btn')) {
+        const dropdown = document.getElementById('langDropdown');
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('langDropdown').classList.add('hidden');
+      document.querySelectorAll('[data-pt]').forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${currentLang}`);
+      });
+    }
+
+    function toggleExpand(id) {
+      const content = document.getElementById(id);
+      const icon = document.getElementById('icon-' + id);
+      
+      if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      } else {
+        content.classList.add('open');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    const projectsData = {
+      uniaoBebidas: {
+        title: "União Bebidas",
+        cat: "Mídias Sociais & Produção 360º",
+        desc: "Gestão completa de mídias sociais: criação de roteiros estratégicos, gravação profissional, edição dinâmica, postagem, redação de legendas persuasivas e desenvolvimento de materiais impressos.",
+        images: ["assets/União Bebidas.1(capa).jpg", "assets/UniaoBebidas.2.jpeg", "assets/UniaoBebidas.3.jpg", "assets/UniaoBebidas.4.jpg", "assets/UniaoBebidas.5.jpeg"],
+        links: [
+          { label: "Ver reels 1", url: "https://www.instagram.com/reel/DWRgx-dN0mK/" },
+          { label: "Ver reels 2", url: "https://www.instagram.com/reel/DO_vlK_D5ap/" },
+          { label: "Ver reels 3", url: "https://www.instagram.com/reel/DP4cDOrjy6_/" },
+          { label: "Ver reels 4", url: "https://www.instagram.com/reel/DTvZmFzD36-/" },
+          { label: "Ver reels 5", url: "https://www.instagram.com/p/Deh0KE8vipo/" }
+        ]
+      },
+      lojaoDasCadeiras: {
+        title: "Lojão das Cadeiras",
+        cat: "Roteiro, Gravação & Edição",
+        desc: "Produção audiovisual de alta conversão: elaboração de roteiros comerciais, gravação com nossa modelo comercial em cena e pós-produção dinâmica.",
+        images: ["assets/Lojao das cadeiras.1(capa).jpg"],
+        links: [
+          { label: "Ver reels 1", url: "https://www.instagram.com/p/DSnTpz9iblK/" },
+          { label: "Ver reels 2", url: "https://www.instagram.com/p/DSAV1rgEb91/" },
+          { label: "Ver reels 3", url: "https://www.instagram.com/p/DS7qfiVERPQ/" },
+          { label: "Ver reels 4", url: "https://www.instagram.com/p/DUBSA69Ebfw/" },
+          { label: "Ver reels 5", url: "https://www.instagram.com/p/DTxgvdmjE-D/" },
+          { label: "Ver reels 6", url: "https://www.instagram.com/p/DUltIbbiWYs/" },
+          { label: "Ver reels 7", url: "https://www.instagram.com/p/DSvC-klCRNA/" }
+        ]
+      },
+      glimmor: {
+        title: "Glimmor",
+        cat: "Identidade Visual & Packaging",
+        desc: "Desenvolvimento de identidade visual marcante, projeto de branding corporativo e design de materiais impressos e embalagens.",
+        images: ["assets/Glimmor.1.jpg", "assets/Glimmor.2.jpg", "assets/Glimmor.3.jpg", "assets/Glimmor.4.jpg", "assets/Glimmor.5.jpg"],
+        links: []
+      },
+      construlux: {
+        title: "Construlux",
+        cat: "Branding & Construção Civil",
+        desc: "Criação de identidade visual robusta, posicionamento estratégico de marca e desenvolvimento de materiais impressos para o setor de construção civil.",
+        images: ["assets/Construlux.1.jpg", "assets/Construlux.2.jpg", "assets/Construlux.3.jpg", "assets/Construlux.4.jpg", "assets/Construlux.5.jpg"],
+        links: []
+      },
+      petDream: {
+        title: "Pet Dream Hospital Veterinário",
+        cat: "Direção Audiovisual & Roteiro",
+        desc: "Direção e gravação de vídeos institucionais e comerciais utilizando nossa modelo comercial, combinada com criação de roteiros humanizados para o setor de saúde animal.",
+        images: ["assets/PetDream.1(capa).jpg"],
+        links: [
+          { label: "Ver reels 1", url: "https://www.instagram.com/p/DTxgvdmjE-D/" },
+          { label: "Ver reels 2", url: "https://www.instagram.com/reel/DINJkSAuklF/" },
+          { label: "Ver reels 3", url: "https://www.instagram.com/reel/DHmU5-Pu0YC/" }
+        ]
+      },
+      canalDaConstrucao: {
+        title: "Canal da Construção",
+        cat: "Direção Audiovisual & Roteiro",
+        desc: "Criação de roteiros especializados e gravação de vídeos dinâmicos com a participação de nossa modelo comercial para impulsionar a autoridade no nicho.",
+        images: ["assets/Canal da Construção.1(capa).jpg"],
+        links: [
+          { label: "Ver reels 1", url: "https://www.instagram.com/reel/DFV-cQVBx6K/" },
+          { label: "Ver reels 2", url: "https://www.instagram.com/reel/DEqRzigSdMM/" },
+          { label: "Ver reels 3", url: "https://www.instagram.com/reel/DE0kcqjSbEe/" }
+        ]
+      },
+      maxxiSupri: {
+        title: "Maxxi Supri",
+        cat: "Direção Audiovisual & Roteiro",
+        desc: "Produção de conteúdo com gravação de vídeos direcionados (com nossa modelo comercial em cena) e desenvolvimento de roteiros estratégicos para engajamento.",
+        images: ["assets/MaxxiSupri.1(capa).jpg"],
+        links: [
+          { label: "Ver reels", url: "https://www.instagram.com/reel/DIwci1yuXtO/" }
+        ]
+      }
+    };
+
+    let currentProjectImages = [];
+    let currentImageIndex = 0;
+
+    function openProjectModal(projectKey) {
+      const data = projectsData[projectKey];
+      if (!data) return;
+
+      currentProjectImages = data.images;
+      currentImageIndex = 0;
+
+      document.getElementById('modalTitle').innerText = data.title;
+      document.getElementById('modalCat').innerText = data.cat;
+      document.getElementById('modalDesc').innerText = data.desc;
+      
+      updateModalImage();
+
+      const linksSection = document.getElementById('modalLinksSection');
+      const container = document.getElementById('modalLinksContainer');
+      container.innerHTML = '';
+
+      if (data.links && data.links.length > 0) {
+        linksSection.classList.remove('hidden');
+        data.links.forEach(item => {
+          const a = document.createElement('a');
+          a.href = item.url;
+          a.target = '_blank';
+          a.className = 'inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold transition-all border border-zinc-700 hover:scale-105';
+          a.innerHTML = `${item.label} <i data-lucide="instagram" class="w-3.5 h-3.5"></i>`;
+          container.appendChild(a);
+        });
+      } else {
+        linksSection.classList.add('hidden');
+      }
+
+      lucide.createIcons();
+      document.getElementById('projectModal').classList.remove('hidden');
+    }
+
+    function updateModalImage() {
+      const img = document.getElementById('modalMainImg');
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = currentProjectImages[currentImageIndex];
+        img.style.opacity = '1';
+      }, 150);
+    }
+
+    function nextImage() {
+      if (currentProjectImages.length === 0) return;
+      currentImageIndex = (currentImageIndex + 1) % currentProjectImages.length;
+      updateModalImage();
+    }
+
+    function prevImage() {
+      if (currentProjectImages.length === 0) return;
+      currentImageIndex = (currentImageIndex - 1 + currentProjectImages.length) % currentProjectImages.length;
+      updateModalImage();
+    }
+
+    function closeProjectModal() {
+      document.getElementById('projectModal').classList.add('hidden');
+    }
+
+    function sendWhatsApp(event) {
+      event.preventDefault();
+      const name = document.getElementById('formName').value;
+      const service = document.getElementById('formService').value;
+      const desc = document.getElementById('formDesc').value;
+      const phone = "5581995977910";
+      const message = `Olá, Centurize Studio!%0A%0A*Solicitação de Orçamento*%0A*Nome/Empresa:* ${encodeURIComponent(name)}%0A*Serviço:* ${encodeURIComponent(service)}%0A*Momento Atual:* ${encodeURIComponent(desc)}`;
+      window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+    }
+  </script>
+</body>
+</html>
